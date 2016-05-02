@@ -9,6 +9,7 @@ access_token_secret = os.environ['ACCESS_TOKEN_SECRET']
 
 api = TwitterAPI(consumer_key, consumer_secret, access_token_key, access_token_secret)
 
+# Run this periodically (via Heroku scheduler)
 def retweet_one_random_tweet():
 	r = api.request('statuses/sample')
 	id = r.get_iterator().next()['id']

@@ -1,4 +1,2 @@
-config*
-config.json
-.venv
+venv/
 .env*
