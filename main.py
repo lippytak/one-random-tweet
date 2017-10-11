@@ -12,7 +12,14 @@ api = TwitterAPI(consumer_key, consumer_secret, access_token_key, access_token_s
 # Run this periodically (via Heroku scheduler)
 def retweet_one_random_tweet():
 	r = api.request('statuses/sample')
-	id = r.get_iterator().next()['id']
-	retweet = api.request('statuses/retweet/:%d' % id)
+	tweet = r.get_iterator().next()
+	tweet_id = tweet['id']
+	try:
+		possibly_sensitive = tweet['possibly_sensitive']
+	except:
+		possibly_sensitive = False
+
+	if possibly_sensitive:
+		retweet = api.request('statuses/retweet/:%d' % tweet_id)
 
 retweet_one_random_tweet()
