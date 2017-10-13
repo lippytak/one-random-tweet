@@ -13,11 +13,13 @@ api = TwitterAPI(consumer_key, consumer_secret, access_token_key, access_token_s
 def retweet_one_random_tweet():
 	r = api.request('statuses/sample')
 	tweet = r.get_iterator().next()
-	tweet_id = tweet['id']
+	
 	try:
+		tweet_id = tweet['id']
 		possibly_sensitive = tweet['possibly_sensitive']
 	except:
 		possibly_sensitive = False
+		return
 
 	if possibly_sensitive:
 		retweet = api.request('statuses/retweet/:%d' % tweet_id)
